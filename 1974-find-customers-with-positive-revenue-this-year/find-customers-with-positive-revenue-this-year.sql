@@ -1,4 +1,7 @@
 # Write your MySQL query statement below
-select distinct customer_id from customers 
-where year = 2021 and 
-revenue > 0  ; 
+select customer_id from (select customer_id, sum(revenue) as "total" from 
+customers 
+where year = "2021"
+group by customer_id )
+as t1 
+where total > 0  ; 
