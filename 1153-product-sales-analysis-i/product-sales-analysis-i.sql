@@ -1,5 +1,5 @@
-# Write your MySQL query statement below
-select product.product_name, sales.year, sales.price from sales 
-inner join product 
-on sales.product_id = product.product_id 
-group by sales.sale_id ;  
+select t2.product_name, t1.year,t1.price from
+sales as t1
+inner join 
+product as t2 
+on t1.product_id = t2.product_id ; 
