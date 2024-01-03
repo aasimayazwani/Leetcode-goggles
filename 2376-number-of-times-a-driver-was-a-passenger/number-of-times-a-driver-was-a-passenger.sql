@@ -1,12 +1,11 @@
-  # Write your MySQL query statement below
 with cte as 
-(  select passenger_id, count(ride_id) as "cnt"
-  from rides 
-  where passenger_id in (select distinct driver_id from rides) 
-  group by passenger_id 
-)
+(select passenger_id, count(ride_id) as "cnt"
+from rides 
+group by passenger_id )
 
-select t3.driver_id, ifnull(cnt,0) as "cnt" 
-from (select distinct driver_id from rides) as t3  
-left join cte
-on  cte.passenger_id = t3.driver_id ; 
+select t1.driver_id, ifnull(t2.cnt,0) as "cnt" from 
+(select distinct driver_id from rides) as t1 
+left join
+cte as t2
+on  t1.driver_id = t2.passenger_id ; 
+
