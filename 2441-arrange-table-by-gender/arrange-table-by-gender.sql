@@ -1,11 +1,15 @@
-with cte as (select *, dense_rank() over (partition by gender order by user_id asc ) as "ranking", 
-case 
-    when gender = "male" then 3 
-    when gender = "female" then 1 
-    when gender = "other" then 2 
-end 
-    as "sub_rankings"
-from genders )
+with cte as 
+(select user_id, gender, 1 as "ordering",
+row_number() over (order by user_id) as "row_numbering" from genders 
+where gender = "female"
+UNION ALL
+select user_id, gender, 3 as "ordering",
+row_number() over (order by user_id) as "row_numbering" from genders 
+where gender = "male"
+UNION ALL
+select user_id, gender, 2 as "ordering",
+row_number() over (order by user_id) as "row_numbering" from genders 
+where gender = "other")
 
 select user_id, gender from cte 
-order by ranking asc, sub_rankings asc ; 
+order by row_numbering asc , ordering asc   ; 
