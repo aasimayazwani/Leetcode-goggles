@@ -1,7 +1,13 @@
-# Write your MySQL query statement below
-with cte as (select first_col, ROW_NUMBER() OVER(ORDER BY first_col ASC) as "ranking1" from data) 
+with cte as
+(select first_col, row_number() over () as "counting" from
+(select first_col 
+from data 
+order by first_col asc)  as t1)
 
-select t1.first_col, t2.second_col  from cte as t1 
-inner join
-(select second_col, ROW_NUMBER() OVER(ORDER BY second_col desc ) as "ranking2" from data ) as t2 
-on t1.ranking1 = t2.ranking2
+select first_col,second_col from cte 
+inner join 
+(select second_col, row_number() over () as "counting" from
+(select second_col 
+from data 
+order by second_col desc)  as t2) as t3 
+on cte.counting = t3.counting ;
