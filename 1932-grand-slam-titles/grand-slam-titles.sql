@@ -1,19 +1,13 @@
 # Write your MySQL query statement below
-with cte as 
-(select Wimbledon as "titles" from Championships 
-UNION ALL 
-select Fr_open as "titles" from Championships 
-UNION ALL 
-select US_open as "titles" from Championships 
-UNION ALL
-select Au_open as "titles" from Championships )
-
-select t2.player_id, t2.player_name, t1.grand_slams_count from
-(select titles as "player_id",
-        count(titles) as "grand_slams_count"
-
-        from cte 
-        group by titles) as t1 
-inner join players as t2 
-on t1.player_id = t2.player_id 
+select players.player_id, players.player_name, q.grand_slams_count from players inner join 
+(select sum(total) as grand_slams_count, contest as player_id from 
+(select count(*) as total,Wimbledon as  contest from championships group by Wimbledon 
+union all
+select count(*) as total, Fr_open as contest from championships group by Fr_open  
+union all
+select count(*) as total,US_open as  contest from championships group by US_open 
+union all
+select count(*) as total,Au_open as contest from championships group by Au_open  ) as t 
+group by contest) as q on 
+players.player_id = q.player_id 
 ; 
