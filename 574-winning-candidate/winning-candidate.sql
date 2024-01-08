@@ -1,12 +1,13 @@
 # Write your MySQL query statement below
 with cte as 
-(select candidateid, dense_rank() over (order by total desc) as "ranking" from  
-(select candidateid, count(id) as "total"
+(select *, dense_rank() over (order by counting desc) as "ranking"
+from
+(select candidateid, count(candidateid) as "counting"
 from vote 
-group by candidateid ) as t1 
-)
+group by candidateid) as t1 )
 
-select distinct candidate.name from cte
-inner join candidate 
-on cte.candidateid = candidate.id
-where cte.ranking = 1  ; 
+
+select candidate.name from candidate 
+inner join 
+(select * from cte where ranking = 1 ) as t2 
+on candidate.id = t2.candidateId ; 
