@@ -1,4 +1,9 @@
 # Write your MySQL query statement below
+# Pseudo Code
+# keep track of the network between user1 and user2
+# Remember its possible for user_id to be present in user2 list and not in the other way. 
+# Otherwise just a union statement followed by group by statement
+
 with cte as 
 (select person, count(distinct friend) as "total"
 from 
