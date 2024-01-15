@@ -1,5 +1,10 @@
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
+        # logic
+        # This is a recurring theme in many questions. 
+        # the question provides two strings where the position of the individial mapping 
+        # is important is important and neither the succesor and previous elements. 
+        # Remember that not only should the mapping of s -> t must be unique, but also t-> s
         status1 = self.check(t,s)
         status2 = self.check(s,t)
         answer = [status1,status2]
