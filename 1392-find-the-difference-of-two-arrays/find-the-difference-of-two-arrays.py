@@ -1,9 +1,8 @@
 class Solution:
     def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
-        from collections import Counter
-        nums1dict = Counter(nums1)
-        nums2dict = Counter(nums2)
+        nums1 = set(nums1)
+        nums2 = set(nums2)
 
-        ans1 = [item for item in list(nums1dict.keys()) if item not in [item for item in list(nums2dict.keys())] ] 
-        ans2 = [item for item in list(nums2dict.keys()) if item not in [item for item in list(nums1dict.keys())] ] 
-        return [ans1,ans2]
+        ans1 = nums1.difference(nums2)
+        ans2 = nums2.difference(nums1)
+        return [list(ans1),list(ans2)]
