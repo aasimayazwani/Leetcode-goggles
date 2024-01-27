@@ -1,24 +1,27 @@
 class Solution:
     def equalPairs(self, grid: List[List[int]]) -> int:
-        explored_rows = {}
-        
-        for i in range(0,len(grid)) :
-            explored_rows[str(i)] = grid[i]
+        row_map = {}
+        for row in grid:
+            if tuple(row) in row_map:
+                row_map[tuple(row)] += 1
+            if tuple(row) not in row_map:
+                 row_map[tuple(row)] = 1
+        col_map = {}
+        for i in range(0,len(grid)):
+            values = []
+            for j in range(0,len(grid[0])):
+                values.append(grid[j][i])
+            if tuple(values) in col_map:
+                col_map[tuple(values)] += 1 
+            if tuple(values) not in col_map:
+                col_map[tuple(values)] = 1
 
-        number_of_columns = len(grid[0])
-        counting = 0
-
-        for i in range(0,number_of_columns):
-            current_columns = [item[i] for item in grid]
-            counting += self.check_matching(current_columns,explored_rows)
+        rows = list(row_map.keys())
+        cols = list(col_map.keys())
+        counting = 0 
+        counting = 0 
+        for i in range(0, len(rows)):
+            for j in range(0, len(cols)):
+                if rows[i] == cols[j]:
+                    counting += row_map[rows[i]] * col_map[cols[j]]
         return counting
-            
-    def check_matching(self,column,explored_rows):
-        count = 0
-        keys = list(explored_rows.keys())
-        for i in range(0,len(keys)):
-            if explored_rows[keys[i]] == column:
-                count +=1 
-            else :
-                pass 
-        return count
