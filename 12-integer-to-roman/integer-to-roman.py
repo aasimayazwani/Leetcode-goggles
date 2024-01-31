@@ -1,31 +1,29 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
-        mapping = {1000 : "M",
-        900:"CM",
-        500:"D",
-        400:"CD",
-        100:"C",
-        90:"XC",
-        50:"L",
-        40:"XL",
-        10:"X",
-        9:"IX",
-        8:"VIII",
-        7:"VII",
-        6:"VI",
-        5:"V",
-        4:"IV",
-        3:"III",
-        2:"II",
-        1:"I"}
-        options = list(mapping.keys())
-        concat = ""
-        while num > 0 :
-            for i in range(0,len(options)):
-                if options[i] <= num:
-                    concat += mapping[options[i]]
-                    num = num - options[i]
-                    break
-                else:
-                    pass
-        return concat 
+        mapping = {"I":1,
+          "IV":4,
+           "V":5,
+          "IX":9,
+          'X':10,
+           "XL":40,
+          "L":50,
+           "XC":90,
+          "C":100,
+           "CD":400,
+          "D":500,
+           "CM":900,
+           "M":1000}
+
+        mapping = {value:key for key, value in mapping.items()}
+        candidate = sorted(list(mapping.keys()),reverse=True)
+        total = ""
+        import math
+        for i in range(0,len(candidate)):
+            if candidate[i] <= num:
+                print(candidate[i])
+                divide = math.floor(num/candidate[i])
+                total += str(mapping[candidate[i]])*divide
+                num = num%candidate[i]
+            else:
+                pass
+        return total 
