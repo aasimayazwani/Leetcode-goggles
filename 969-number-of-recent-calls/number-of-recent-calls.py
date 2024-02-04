@@ -1,12 +1,21 @@
+from collections import deque
+
 class RecentCounter:
 
     def __init__(self):
-        self.mapping = {}
+        self.mapping = deque()
 
     def ping(self, t: int) -> int:
-        self.mapping[t] = 1
-        start = t - 3000
-        return len([item for item in self.mapping.keys() if (item >= start) and (item <= t) ])
+        self.mapping.append(t)
+        pointer = 0 
+        while len(self.mapping) > 0:
+            if self.mapping[0] < t - 3000:
+                self.mapping.popleft()
+                pointer +=1 
+            else:
+                break
+
+        return len(self.mapping)
 
 
 
