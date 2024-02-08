@@ -1,2 +1,3 @@
-select distinct tweet_id from tweets
-where length(content) > 15 ; 
+select tweet_id 
+from tweets 
+where length(content) >15 ;
