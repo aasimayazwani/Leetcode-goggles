@@ -1,6 +1,6 @@
 # Write your MySQL query statement belowselect 
 select class from 
-(select class, count(class) as "total"
-from courses 
-group by class ) as t1 
-where total >=5 ; 
+(select class, count(distinct student) as "total"
+from courses
+group by class
+having total >= 5) as t1 
