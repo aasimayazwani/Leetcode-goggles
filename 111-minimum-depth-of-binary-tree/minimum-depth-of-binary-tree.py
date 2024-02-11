@@ -25,5 +25,5 @@ class Solution:
             return depth
 
         current = dfs(node)
-        print(current)
+        #print(current)
         return min(current)
