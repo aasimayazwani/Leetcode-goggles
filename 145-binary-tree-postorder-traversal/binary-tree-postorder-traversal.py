@@ -9,14 +9,12 @@ class Solution:
         values = []
         def dfs(root):
             if root == None:
-                return
-            
+                return []
             else:
                 dfs(root.left)
                 dfs(root.right)
                 values.append(root.val)
 
-            return values 
-    
+            return values
 
         return dfs(root)
