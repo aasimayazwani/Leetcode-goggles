@@ -7,20 +7,14 @@
 class Solution:
     def isValidBST(self, root):
         values = []
-        
         def dfs(root):
             if root == None:
-                return []
-            else:
-                dfs(root.left)
-                values.append(root.val)
-                dfs(root.right)
+                return 
+            dfs(root.left)
+            values.append(root.val)
+            dfs(root.right)
 
-            return values
-                
         dfs(root)
-        if len(set(values)) < len(values):
-            return False
-        elif sorted(values) == list(values):
-            return True
-        return False 
+
+        return (sorted(values) == values) and (len(set(values)) == len(values))
+        
