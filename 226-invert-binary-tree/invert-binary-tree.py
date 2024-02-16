@@ -9,17 +9,10 @@ class Solution:
         def dfs(root):
             if root == None:
                 return 
-            
-            temp = root.left
-            root.left = root.right
-            root.right  = temp
-
-            dfs(root.left)
-            dfs(root.right)
+            else:
+                root.right, root.left = dfs(root.left), dfs(root.right)
 
             return root
 
-        return dfs(root)
-            
-        
-        
+        value = dfs(root)
+        return value 
