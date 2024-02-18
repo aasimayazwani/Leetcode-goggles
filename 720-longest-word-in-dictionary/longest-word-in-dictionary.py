@@ -14,9 +14,8 @@ class Solution:
         if len(correct) > 0:
             value = max(correct)
             t1 = sorted(answers[value],reverse=False)
-            if len(t1) > 0:
-                return t1[0]
-            return ""
+            return t1[0]
+            
         else:
             return ""
 
