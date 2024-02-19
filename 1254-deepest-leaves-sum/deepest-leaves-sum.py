@@ -9,14 +9,13 @@ class Solution:
         answer = []
         def dfs(root,depth):
             if root == None:
-                return 
-            else:
-                dfs(root.left,depth+1)
-                if root.left == None and root.right == None:
-                    answer.append([root.val,depth])
-                dfs(root.right,depth+1)
+                return
+            dfs(root.left,depth+1)
+            if root.left == None and root.right == None:
+                answer.append([root.val,depth+1])
+            dfs(root.right,depth+1)
 
-        dfs(root,1)
-        #print(answer)
-        max_depth = max([item[1] for item in answer])
-        return sum([item[0] for item in answer if item[1] == max_depth])
+        dfs(root,0)
+        depth_values = max([item[1] for item in answer])
+
+        return sum([item[0] for item in answer if item[1] == depth_values])
