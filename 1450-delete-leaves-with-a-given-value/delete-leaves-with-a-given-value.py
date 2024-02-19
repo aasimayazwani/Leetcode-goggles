@@ -6,6 +6,10 @@
 #         self.right = right
 class Solution:
     def removeLeafNodes(self, root: Optional[TreeNode], target: int) -> Optional[TreeNode]:
+        current = self.running(root,target)
+        return current
+        
+    def running(self,root,target):
         def dfs(root):
             if root == None:
                 return 
@@ -13,11 +17,9 @@ class Solution:
                 root.left = dfs(root.left)
                 root.right = dfs(root.right)
 
-                if root.left == None and root.right == None and root.val == target:
-                    root = None
+                if (root.left == None) and (root.right == None) and (root.val == target):
+                    return None
 
-                else:
-                    return root
-        return dfs(root)
-        
-        
+                return root
+        value = dfs(root)
+        return value 
