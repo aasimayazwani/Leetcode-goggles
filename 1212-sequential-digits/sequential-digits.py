@@ -2,7 +2,7 @@ class Solution:
     def sequentialDigits(self, low: int, high: int) -> List[int]:
         answer = []
         def add(current,low,high):
-            print(current)
+            #print(current)
             if int(current) >= int(low) and int(current) <= int(high):
                 answer.append(int(current))
             if len(current) < len(high) and (current[-1] != "9"):
