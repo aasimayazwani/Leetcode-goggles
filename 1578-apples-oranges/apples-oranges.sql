@@ -6,4 +6,5 @@ where
 t1.sale_date = t2.sale_date and 
 t1.fruit = "apples" and 
 t2.fruit = "oranges"
-group by t1.sale_date ; 
+group by t1.sale_date 
+order by t1.sale_date ; 
