@@ -1,7 +1,6 @@
-with cte as 
-(select *, count(distinct product_key)  as "total"
-from customer 
-group by customer_id )
-
-select distinct customer_id from cte 
-where total in (select count(distinct product_key) from product) ; 
+select customer_id from 
+(select customer_id, count(distinct product_key) as "counting"
+from customer
+group by customer_id
+having counting = (select count(distinct product_key) from product)) 
+as t1 ; 
