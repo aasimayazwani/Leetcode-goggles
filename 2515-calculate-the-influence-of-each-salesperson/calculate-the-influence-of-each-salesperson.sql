@@ -1,12 +1,18 @@
-# Write your MySQL query statement below
 with cte as 
-(select t1.salesperson_id, t1.name, t2.customer_id from salesperson as t1 
-left join 
-Customer as t2 
-on t1.salesperson_id = t2.salesperson_id)
+(select salesperson_id, sum(price) as "total"
+from 
+(select t1.salesperson_id, t2.price from customer as t1 
+inner join 
+sales as t2 
+on t1.customer_id = t2.customer_id 
+) as t3 
+group by t1.salesperson_id)
 
-select t3.salesperson_id, t3.name, ifnull(sum(t4.price),0) as "total" from cte as t3 
+select
+t4.salesperson_id, 
+t4.name, 
+ifnull(t5.total,0) as "total" 
+from salesperson as t4 
 left join 
-sales as t4 
-on t3.customer_id =t4.customer_id 
-group by t3.salesperson_id
+cte as t5 
+on t4.salesperson_id = t5.salesperson_id 
