@@ -1,8 +1,11 @@
-with cte as
-(select transaction_id, cur_date, amount from
-(select *, date_format(day,"%Y-%m-%d") as cur_date from transactions ) as t1 )
-
-select distinct transaction_id from
-(select *, dense_rank() over (partition by cur_date order by amount desc)  as "ranking" from cte) as t2 
-where ranking = 1 
-order by transaction_id asc ; 
+select transaction_id
+from 
+(select transaction_id, 
+dense_rank() over (partition by day_value order by amount desc) as "ranking"
+from 
+(select transaction_id, date_format(day,"%Y-%m-%d") as "day_value", 
+amount
+from transactions) as t1) as t2 
+where 
+ranking = 1 
+order by transaction_id asc ;
