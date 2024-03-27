@@ -1,14 +1,11 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        answer =[]
-        def iterate(arr,nums):
-            if len(arr) == len(nums):
-                answer.append(arr)
-            if len(arr) < len(nums):
-                for number in nums:
-                    if number not in arr:
-                        iterate(arr+[number],nums)
-                    else:
-                        pass
-        iterate([],nums)
-        return answer 
+        ans = []
+        def backtrack(nums,cur):
+            if len(nums)==0:
+                ans.append(cur)
+            else:
+                for i in range(0,len(nums)):
+                    backtrack(nums[0:i]+nums[i+1:], cur+[nums[i]])
+        backtrack(nums,[])
+        return ans
