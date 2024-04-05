@@ -1,24 +1,15 @@
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]):  
-        if root == None:
-            return 0 
-        root = [root,1]
-        depth = []
-        
-        def dfs(root):
-            
-            [root,path] = root
+        result = []
+        def backtrack(root,depth):
+            if root == None:
+                return 
+            backtrack(root.left,depth+1)
+            result.append([root.val,depth])
+            backtrack(root.right,depth+1)
 
-            if root.left != None:
-                dfs([root.left,path+1])
-            
-            if root.left == None and root.right == None:
-                depth.append(path)
 
-            if root.right != None:
-                dfs([root.right,path+1])
-
-            return depth
-
-        ans = dfs(root)
-        return max(ans)
+        if root != None:
+            backtrack(root,1)
+            return max([item[1] for item in result])
+        return 0 
