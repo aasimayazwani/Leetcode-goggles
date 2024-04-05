@@ -6,23 +6,18 @@
 #         self.right = right
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        current  = [[root,str(root.val)]]
-        values = []
-        answer = []
-        while current:
-            collections = []
-            for i in range(0,len(current)):
-                node = current[i][0]
-                if node.left:
-                    collections.append([node.left,current[i][1] + ">" +str(node.left.val)])
-                if node.right:
-                    collections.append([node.right,current[i][1] + ">"+str(node.right.val)])
-                if (node.left == None) and (node.right == None):
-                    answer.append(current[i][1])
-            current = collections
-            if len(current) > 0:
-                values.append(current)
-        answer = sum([int(item.replace(">","")) for item in answer])
-        return answer
-        #return sum([int(item) for item in t1])
-                
+        result = []
+        def backtrack(root,path):
+            if root == None:
+                return 
+            else:
+                if root.left != None:
+                    backtrack(root.left,path+">" + str(root.left.val))
+                if (root.left == None) and (root.right == None):
+                    value = int("".join(path.split(">")))
+                    result.append(value)
+                if root.right != None:
+                    backtrack(root.right,path+">" + str(root.right.val))
+        
+        backtrack(root,str(root.val))
+        return sum(result)
