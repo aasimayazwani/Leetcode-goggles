@@ -7,24 +7,27 @@
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         current = [root]
-        while len(current) > 0:
-            collection = []
+        levels = []
+        while current:
             values = []
+            current_values = []
             for i in range(0,len(current)):
-                node= current[i]
+                node = current[i]
                 if node.left != None:
-                    collection.append(node.left)
-                    values.append(node.left.val)
+                    values.append(node.left)
+                    current_values.append(node.left.val)
                 if node.left == None:
-                    values.append("missing")
+                    current_values.append("missing")
                 if node.right != None:
-                    collection.append(node.right)
-                    values.append(node.right.val)
+                    values.append(node.right)
+                    current_values.append(node.right.val)
                 if node.right == None:
-                    values.append("missing")
-            current = collection
-            if values != values[::-1]:
+                    current_values.append("missing")
+                
+            current = values
+            #print(current_values)
+            if (current_values == current_values[::-1]):
+                pass
+            else:
                 return False
         return True 
-            
-                    
