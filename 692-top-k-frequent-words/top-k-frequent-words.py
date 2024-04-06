@@ -1,6 +1,6 @@
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        import heapq 
+        #import heapq 
         from collections import Counter
         mapping = Counter(words)
         min_heap = [(-freq, value) for value, freq in mapping.items()]
