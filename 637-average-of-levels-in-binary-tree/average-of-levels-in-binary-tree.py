@@ -6,25 +6,26 @@
 #         self.right = right
 class Solution:
     def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
-        values = self.explore(root)
+        result = []
+        def dfs(root,depth):
+            if root.left != None:
+                dfs(root.left,depth+1)
+            result.append([root.val,depth])
+            if root.right != None:
+                dfs(root.right,depth+1)
 
-        return [sum(item)/len(item) for item in values if len(item) > 0]
-
-
-    def explore(self,root):
-        current = [root]
-        values_store = [[root.val]]
-        while current:
-            collection = []
-            values = []
-            for i in range(0,len(current)):
-                node = current[i]
-                if node.left != None:
-                    collection.append(node.left)
-                    values.append(node.left.val)
-                if node.right != None:
-                    collection.append(node.right)
-                    values.append(node.right.val)
-            values_store.append(values)
-            current = collection
-        return values_store
+        dfs(root,1)
+        mapping = {}
+        for i in range(0,len(result)):
+            value, depth = result[i]
+            if depth not in mapping:
+                mapping[depth] = [value]
+            else:
+                mapping[depth].append(value)
+        keys = sorted(list(mapping.keys()))
+        ans = []
+        for i in range(0,len(keys)):
+            temp = mapping[keys[i]]
+            ans.append(sum(temp)/len(temp))
+        return ans 
+        
