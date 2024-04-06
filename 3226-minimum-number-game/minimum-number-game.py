@@ -1,6 +1,5 @@
 class Solution:
     def numberGame(self, nums: List[int]) -> List[int]:
-        import heapq 
         heapq.heapify(nums)
         result = []
         while len(nums) > 0:
