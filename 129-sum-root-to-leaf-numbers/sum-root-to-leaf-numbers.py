@@ -7,17 +7,17 @@
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
         result = []
-        def backtrack(root,path):
+        def dfs(root,path):
             if root == None:
                 return 
-            else:
-                if root.left != None:
-                    backtrack(root.left,path+">" + str(root.left.val))
-                if (root.left == None) and (root.right == None):
-                    value = int("".join(path.split(">")))
-                    result.append(value)
-                if root.right != None:
-                    backtrack(root.right,path+">" + str(root.right.val))
-        
-        backtrack(root,str(root.val))
+            if root.left != None:
+                dfs(root.left,path + ">" + str(root.left.val))
+            if (root.left == None) and (root.right == None):
+                total = path
+                value = int("".join(total.split(">")))
+                result.append(value)
+            if root.right != None:
+                dfs(root.right,path + ">" + str(root.right.val))
+
+        dfs(root,str(root.val))
         return sum(result)
