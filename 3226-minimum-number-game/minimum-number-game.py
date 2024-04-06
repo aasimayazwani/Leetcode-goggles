@@ -1,13 +1,10 @@
 class Solution:
     def numberGame(self, nums: List[int]) -> List[int]:
-        # remove the minimum element first alice and theb bob 
-        # Bob element added, 
-        nums = sorted(nums)
-    
+        import heapq 
+        heapq.heapify(nums)
         result = []
-
         while len(nums) > 0:
-            to_remove = list(reversed(nums[0:2]))
-            nums = nums[2:]
-            result.extend(to_remove)
-        return result 
+            alice = heapq.heappop(nums)
+            bob = heapq.heappop(nums)
+            result += [bob,alice]
+        return result
