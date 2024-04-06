@@ -1,12 +1,12 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        ans = []
+        result = []
         def backtrack(nums,current):
             if len(nums) == 0:
-                ans.append(current)
-            if len(nums) > 0:
-                ans.append(current)
+                result.append(current)
+            else:
+                result.append(current)
                 for i in range(0,len(nums)):
                     backtrack(nums[i+1:],current+[nums[i]])
         backtrack(nums,[])
-        return ans 
+        return result 
