@@ -7,4 +7,4 @@ class Solution:
             alice = heapq.heappop(nums)
             bob = heapq.heappop(nums)
             result += [bob,alice]
-        return result
+        return result 
