@@ -1,5 +1,5 @@
-select distinct actor_id, director_id from 
-(select actor_id, director_id, count(timestamp) as "total"
-from actordirector
-group by actor_id, director_id 
-having total >= 3 ) as t4 ; 
+select actor_id, director_id from 
+(select actor_id, director_id, count(*) as "counting"
+from ActorDirector 
+group by actor_id , director_id) as t1 
+where counting >= 3 
