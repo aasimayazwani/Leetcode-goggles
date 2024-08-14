@@ -1,15 +1,9 @@
-with cte as 
-(select user_id, gender, 1 as "ordering",
-row_number() over (order by user_id) as "row_numbering" from genders 
-where gender = "female"
-UNION ALL
-select user_id, gender, 3 as "ordering",
-row_number() over (order by user_id) as "row_numbering" from genders 
-where gender = "male"
-UNION ALL
-select user_id, gender, 2 as "ordering",
-row_number() over (order by user_id) as "row_numbering" from genders 
-where gender = "other")
+with cte as
+(select *, dense_rank() over (partition by gender order by user_id asc) as "ranking"
+from genders)
 
-select user_id, gender from cte 
-order by row_numbering asc , ordering asc   ; 
+select  user_id, gender from 
+(select *, 1 as "position" from cte where gender  = "female" UNION ALL
+select *, 3 as "position" from cte where gender  = "male" UNION ALL
+select *, 2 as "position" from cte where gender  = "other") as t1 
+order by ranking asc, position asc ; 
