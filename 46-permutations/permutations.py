@@ -1,16 +1,19 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        # all integers are distinct, so no need to worry about duplicates
-        ans = []
-        def back(nums,current):
-            if len(nums) == 0:
+        def backtracking(current, original,total):
+            if len(current) == total:
                 ans.append(current)
-            if len(nums) > 0:
-                for i in range(0,len(nums)):
-                    back(nums[0:i] + nums[i+1:], current+[nums[i]])
-            else:
                 return 
+            if len(current) < total:
+                for i in range(0,len(original)):
+                    if len(current) == 0:
+                        backtracking(current +[original[i]],original,total)
+                    if len(current) > 0:
+                        if original[i] not in current:
+                            backtracking(current +[original[i]],original,total)
 
-        back(nums,[])
-        return ans 
-        
+        ans = []
+
+        total = len(nums)
+        backtracking([],nums,total)
+        return ans
