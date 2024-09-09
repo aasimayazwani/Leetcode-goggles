@@ -1,12 +1,17 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        ans = []
-        def backtrack(nums,current,k):
-            if len(current) == k:
+        def iterate(current,nums,total):
+            if len(current) == total:
                 ans.append(current)
-            if len(current) < k:
+            if len(current) < total:
                 for i in range(0,len(nums)):
-                    backtrack(nums[i+1:],current+[nums[i]],k)
-        nums = list(range(1,n+1))
-        backtrack(nums,[],k)
-        return ans 
+                    if len(current) == 0:
+                        iterate(current+[nums[i]],nums,total)
+                    if len(current) > 0:
+                        if current[-1] < nums[i]:
+                            iterate(current +[nums[i]],nums,total)
+                        else:
+                            pass
+        ans = []
+        iterate([],list(range(1,n+1)),k)
+        return ans
