@@ -2,10 +2,12 @@ class Solution:
     def frequencySort(self, s: str) -> str:
         from collections import Counter
         mapping = Counter(s)
-        values = [(-freq,char) for char, freq in mapping.items()]
-        result = []
-        heapq.heapify(values)
-        while len(values) > 0:
-            freq, character = heapq.heappop(values)
-            result += character*abs(freq)
-        return result
+        import heapq 
+        current = [(-frequency,key) for key, frequency in mapping.items()]
+        heapq.heapify(current)
+        answer = ""
+        while len(current) > 0:
+            element = heapq.heappop(current)
+            answer += element[1]*abs(element[0])
+        print(answer)
+        return answer 
