@@ -1,16 +1,15 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        s_pointer = 0 
-        t_pointer = 0 
-        result = []
-        # keep the s_pointer in place until a match is found 
-        while (s_pointer < len(s)) and (t_pointer < len(t)):
-            if s[s_pointer] == t[t_pointer]:
-                result.append(t_pointer)
-                s_pointer +=1
-                t_pointer +=1
-            else  :
-                t_pointer +=1
-
-        return len(result) == len(s)
- 
+        s = [item for item in s]
+        t = [item for item in t]
+        # if the first element of t matches the first element of s, 
+        # delete these elements, but if they don't match pop the first element of t 
+        # keep on doing this until matches are found 
+        # stop the process when either the s or t have length of zero. 
+        while (len(s) != 0) and (len(t) != 0):
+            if s[0] == t[0]:
+                s.pop(0)
+                t.pop(0)
+            elif s[0] != t[0]:
+                t.pop(0)
+        return len(s) == 0 
