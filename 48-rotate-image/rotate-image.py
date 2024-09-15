@@ -3,13 +3,14 @@ class Solution:
         """
         Do not return anything, modify matrix in-place instead.
         """
-        length = len(matrix)
-        for i in range(0,length):
-            current = [item[i] for item in matrix[0:length]]
-            matrix.append(current[::-1])
+        k = len(matrix[0])
+        for i in range(0,k):
+            matrix.append([item[i] for item in matrix[0:k]][::-1][0:k])
+            #print(current)
+            #matrix.append(current[0:k])
 
-        while length > 0:
-            matrix.pop(0)
-            length -=1
         
+        while k > 0:
+            matrix.pop(0)
+            k-=1
         
