@@ -4,7 +4,7 @@ class Solution:
             if len(current) == target_length:
                 ans.append(current)
                 return 
-            else:
+            elif len(current) < target_length:
                 for i in ["0","1"]:
                     iterate(current + i, target_length)
         ans = []
