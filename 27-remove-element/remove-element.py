@@ -1,12 +1,20 @@
 class Solution:
-    def removeElement(self, nums: List[int], val: int) -> int:
-        length = len(nums)
-        for i in range(0,length):
-            if nums[i] != val:
-                nums.append(nums[i])
-            else:
-                pass 
-        del nums[0:length]
-        return len(nums)
-
-             
+    def removeElement(self, nums, val):
+        if len(nums) == 0:
+            return 0 
+        else:
+            k = 0
+            right = len(nums)-1
+            for left in range(0,len(nums)):
+                if nums[left] == val:
+                    status = True
+                    while (status) and (left < right):
+                        if nums[right] == val:
+                            right -=1
+                        if nums[right] != val:
+                            nums[left],nums[right] = nums[right], nums[left]
+                            right -=1 
+                            status = False
+                if nums[left] != val:
+                    k += 1
+            return k
