@@ -2,19 +2,22 @@ class Solution:
     def reverseVowels(self, s: str) -> str:
         from collections import Counter
         vowels = "aeiouAEIOU"
-        vowel_mapping = Counter(vowels)
-
-        vowels_collector = []
-
-        for i in range(0,len(s)):
-            if s[i] in vowel_mapping:
-                vowels_collector.append(s[i])
-
-        answer = ""
-        for i in range(0,len(s)):
-            if s[i] not in vowel_mapping:
-                answer += s[i]
-            if s[i] in vowel_mapping:
-                answer += vowels_collector[-1]
-                vowels_collector.pop(-1)
-        return answer 
+        mapping = Counter(vowels)
+        nums = [item for item in s]
+        left = 0
+        right = len(s)-1
+        while left < right:
+            if nums[left] in mapping and nums[right] in mapping:
+                nums[left], nums[right] = nums[right], nums[left]
+                left +=1 
+                right -=1 
+            else:
+                if nums[left] not in mapping and nums[right] in mapping:
+                    left +=1 
+                if nums[left] in mapping and nums[right] not in mapping:
+                    right -=1 
+                if nums[left] not in mapping and nums[right] not in mapping:
+                    left +=1 
+                    right -=1 
+        return "".join(nums)
+                
