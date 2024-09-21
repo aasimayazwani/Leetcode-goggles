@@ -1,16 +1,11 @@
 class Solution:
     def distinctAverages(self, nums: List[int]) -> int:
-        from collections import Counter
-        mapping = Counter(nums)
-
-        history = []
-        while len(mapping.keys()) > 0:
-            valid = list(mapping.keys())
-            temp = (min(valid) + max(valid))/2
-            history.append(temp)
-            mapping[min(valid)] -=1 
-            mapping[max(valid)] -=1 
-            mapping = {key: value for key, value in mapping.items() if value > 0}
-
-        answer = list(set(history))
+        nums = sorted(nums)
+        left = 0
+        right = len(nums)-1
+        answer = set()
+        while left < right:
+            answer.add((nums[left]+nums[right])/2)
+            left +=1 
+            right -=1 
         return len(answer)
