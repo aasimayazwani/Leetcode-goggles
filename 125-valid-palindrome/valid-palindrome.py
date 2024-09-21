@@ -1,14 +1,12 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        import math
-        filtered_chars = filter(lambda ch: ch.isalnum(), s)
-        filtered_chars = [item.lower() for item in filtered_chars]
-        forward = ("".join(filtered_chars))
-        backward = forward[::-1]
-        length = int(len(forward)/2)
-        for left in range(0,length):
-            if forward[left] == backward[left]:
-                pass 
+        s = [item.lower() for item in s if item.isalpha() or item.isdigit()]
+        left, right = 0, len(s)-1
+        while left < right:
+            if s[left] != s[right]:
+                return False 
             else:
-                return False
+                left +=1
+                right -=1 
+
         return True 
