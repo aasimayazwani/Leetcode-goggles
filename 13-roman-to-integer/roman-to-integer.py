@@ -1,26 +1,24 @@
 class Solution:
     def romanToInt(self, s: str) -> int:
+        s = [item for item in s ]
         roman = ["I","V","X","L","C","D","M"]
-        numbers = [1,5,10,50,100,500,1000]
+        numer = [1,5,10,50,100,500,1000]
 
         mapping = {}
         for i in range(0,len(roman)):
-            mapping[roman[i]] = numbers[i]
-
-
+            mapping[roman[i]] = numer[i]
         stack = []
-        for i in range(0,len(s)):
-            if s[i] in mapping:
-                stack.append(mapping[s[i]])
-        stack += [0]
-        total = 0
-        i = 0
-        while i+1 < len(stack):
-            if stack[i+1] <= stack[i]:
-                total += stack[i]
-                i +=1
+        while len(s) > 0:
+            if len(stack)  == 0:
+                stack.append(mapping[s[0]])
+                s.pop(0)
             else:
-                total  += stack[i+1] - stack[i]
-                i +=2
-            
-        return total
+                if stack[-1] < mapping[s[0]]:
+                    new = mapping[s[0]] - stack[-1]
+                    stack.pop(-1)
+                    s.pop(0)
+                    stack.append(new)
+                else:
+                    stack.append(mapping[s[0]])
+                    s.pop(0)
+        return sum(stack)
