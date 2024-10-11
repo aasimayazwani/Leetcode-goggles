@@ -1,14 +1,12 @@
 class Solution:
     def tribonacci(self, n: int) -> int:
-        mapping = {}
-        mapping[0] = 0 
-        mapping[1] = 1
-        mapping[2] = 1
+        current = {}
+        current[0], current[1], current[2] = 0,1,1
 
-        def looping(n):
-            if n in mapping:
-                return mapping[n]
-            if n not in mapping:
-                mapping[n] = looping(n-1) + looping(n-2) + looping(n-3)
-                return mapping[n]
-        return looping(n)
+        def result(n):
+            if n in current:
+                return current[n]
+            else:
+                current[n] = result(n-3) + result(n-1) + result(n-2) 
+                return current[n]
+        return result(n)
