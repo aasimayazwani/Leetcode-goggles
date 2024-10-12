@@ -5,15 +5,10 @@ class Solution:
         # in the ranson note are less then or equal to the magazine. 
         # THe order is not relevant
         # so I will use a dictionary for both the magazine and ransomnote. 
-
-        from collections import Counter
-        ransom_dict = Counter(ransomNote)
-        magazine_dict = Counter(magazine)
-
-        words = set(ransomNote)
-        for word in words:
-            if ransom_dict[word] > magazine_dict[word]:
+        from collections import Counter 
+        c1, c2 = Counter(ransomNote), Counter(magazine)
+        keys = list(c1.keys())
+        for i in range(0,len(keys)):
+            if c1[keys[i]] > c2[keys[i]]:
                 return False
-            else:
-                pass 
         return True 
