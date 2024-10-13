@@ -7,26 +7,24 @@ class TreeNode:
 class Solution:
     def maxLevelSum(self, root: Optional[TreeNode]) -> int:
         values = []
-
-        def dfs(node, depth):
-            if node is None:
-                return
-            if len(values) < depth:
-                values.append([node.val])
-            else:
-                values[depth-1].append(node.val)
-            dfs(node.left, depth + 1)
-            dfs(node.right, depth + 1)
-
-        dfs(root, 1)
-
-        # Calculate the sum for each level and determine the level with the maximum sum
-        max_sum = float('-inf')
-        max_level = 0
-        for i, val in enumerate(values):
-            current_sum = sum(val)
-            if current_sum > max_sum:
-                max_sum = current_sum
-                max_level = i + 1  # +1 because levels are 1-indexed
-
-        return max_level
+        answers = [root.val]
+        stack = [root]
+        while len(stack) > 0:
+            current = []
+            for i in range(0,len(stack)):
+                node = stack[i]
+                if node.left:
+                    current.append(node.left)
+                if node.right:
+                    current.append(node.right)
+            stack = current
+            if len(current) > 0:
+                answers.append(sum([item.val for item in current]))
+        result = answers 
+        position = -100000
+        maximum = -1000000
+        for i in range(0,len(result)):
+            if maximum < result[i]:
+                maximum = result[i]
+                position = i + 1
+        return position 
