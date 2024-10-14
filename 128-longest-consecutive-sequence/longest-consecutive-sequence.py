@@ -1,21 +1,23 @@
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
-        from collections import Counter 
-        nums = sorted(list(set(nums)))
-        mapping = Counter(nums)
-        explored = {}
-        total = 0 
-        for i in range(0,len(nums)):
-            counting = 0 
-            current = nums[i]
-             
-            while True and (current not in explored):
-                explored[current] = 1
-                if current in mapping:
-                    counting += 1
-                    total = max(total,counting)
-                    current +=1 
+        nums = sorted(set(nums))
+        stack = []
+        maximum = -1
+        counting = 0 
+        while nums:
+            #print(stack)
+            if len(stack) == 0:
+                counting = 1 
+                stack.append(nums[0])
+                nums.pop(0)
+            else:
+                if nums[0] - stack[-1] == 1:
+                    counting +=1 
+                    stack.append(nums[0])
+                    nums.pop(0)
                 else:
-                    break
-            #print(total)
-        return total 
+                    maximum = max(maximum,counting)
+                    stack = []
+        maximum = max(maximum,counting)
+        return maximum
+                    
