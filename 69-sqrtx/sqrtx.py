@@ -1,11 +1,14 @@
 class Solution:
     def mySqrt(self, x: int) -> int:
-        left = 0 
-        right = x 
+        left, right, target = 0, x, x
         while left <= right:
-            mid = left + (right-left)//2 
-            if mid*mid <= x:
+            #print([left,right])
+            mid = left + (right-left)//2
+            product = mid*mid
+            if target == product:
+                return mid
+            elif target < product :
+                right = mid -1 
+            elif target > product:
                 left = mid + 1 
-            else:
-                right = mid  - 1 
-        return right 
+        return right
