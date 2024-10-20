@@ -1,18 +1,13 @@
 class Solution:
     def moveZeroes(self, nums: List[int]) -> None:
-        """
-        Do not return anything, modify nums in-place instead.
-        """
-        length = len(nums)
-        counting = 0
-        for i in range(0,len(nums)):
-            if nums[i] != 0:
-                nums.append(nums[i])
+        left, right = 0, 1
+        for left in range(0,len(nums)):
+            #print(nums)
+            if nums[left] == 0:
+                for right in range(left, len(nums)):
+                    if nums[right] != 0:
+                        nums[left], nums[right] = nums[right], nums[left]
+                        break
             else:
-                counting +=1 
-        for i in range(0,len(nums)):
-            if nums[i] == 0:
-                nums.append(0)
-        del nums[0:length]
-
+                pass
         
