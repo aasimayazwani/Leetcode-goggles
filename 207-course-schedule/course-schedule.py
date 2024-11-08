@@ -1,21 +1,22 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        from collections import Counter, defaultdict
-        graph, in_edges = defaultdict(list), defaultdict(list)
-        for i in range(0,numCourses):
-            in_edges[i] = 0
-        for dest,pre in prerequisites:
-            graph[pre].append(dest)
-            in_edges[dest] +=1 
-        
-        queue = [item for item in range(numCourses) if in_edges[item] == 0]
-        ans = []
+        from collections import defaultdict
+        graph, in_degree = defaultdict(list), [0]*numCourses
+
+        for i in range(0,len(prerequisites)):
+            dest, prev = prerequisites[i]
+            graph[prev].append(dest)
+            in_degree[dest] += 1
+
+        queue = [item for item in range(numCourses) if in_degree[item] == 0]
+        answer = []
         while queue:
-            stack = queue.pop(0)
-            ans.append(stack)
-            children = graph[stack]
-            for cur in children:
-                in_edges[cur] -=1
-                if in_edges[cur] == 0:
-                    queue.append(cur)
-        return len(ans) == numCourses
+            cur = queue.pop(0)
+            answer += [cur]
+            candidate = graph[cur]
+            for i in range(0,len(candidate)):
+                in_degree[candidate[i]] -=1 
+                if in_degree[candidate[i]] == 0:
+                    queue.append(candidate[i])
+        return len(answer) == numCourses
+
