@@ -12,6 +12,8 @@ class Solution:
         answer = []
         while queue:
             cur = queue.pop(0)
+            if [cur] in answer:
+                return False 
             answer += [cur]
             candidate = graph[cur]
             for i in range(0,len(candidate)):
