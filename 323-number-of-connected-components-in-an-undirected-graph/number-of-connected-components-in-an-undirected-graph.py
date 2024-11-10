@@ -3,22 +3,17 @@ class Solution:
         parent = {}
         for i in range(0,n):
             parent[i] = i
+        def find(node):
+            if parent[node] != node:
+                parent[node] = find(parent[node])
+            return parent[node]
 
-        def find(root):
-            if root != parent[root]:
-                parent[root] = find(parent[root])
-            return parent[root]
-
-        def union(rootx,rooty):
-            rootx = find(rootx)
-            rooty = find(rooty)
-            if rootx != rooty:
-                parent[rooty] = find(parent[rootx])
-
-        for i in range(0,len(edges)):
-            u, v = edges[i][0], edges[i][1]
-            union(u,v)
+        def union(nodex,nodey):
+            nodex, nodey = find(nodex), find(nodey)
+            if nodex != nodey:
+                parent[nodey] = nodex
         
-        return len(list(set([find(item) for item in list(range(n))])))
+        for x, y in edges:
+            union(x,y)
 
-            
+        return len(set([find(item) for item in range(n)]))
