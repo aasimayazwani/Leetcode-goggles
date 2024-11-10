@@ -1,19 +1,12 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def backtracking(current, original,total):
-            if len(current) == total:
-                ans.append(current)
-                return 
-            if len(current) < total:
-                for i in range(0,len(original)):
-                    if len(current) == 0:
-                        backtracking(current +[original[i]],original,total)
-                    if len(current) > 0:
-                        if original[i] not in current:
-                            backtracking(current +[original[i]],original,total)
-
         ans = []
-
-        total = len(nums)
-        backtracking([],nums,total)
-        return ans
+        def backtrack(current,nums):
+            if len(current)==len(nums):
+                ans.append(current)
+            elif len(current) < len(nums):
+                for i in range(0,len(nums)):
+                    if nums[i] not in current:
+                        backtrack(current+[nums[i]],nums)
+        backtrack([],nums)
+        return list(set([tuple(item) for item in ans]))
