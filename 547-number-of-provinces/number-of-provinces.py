@@ -1,25 +1,34 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        def find(nodex):
-            if parent[nodex] != nodex:
-                parent[nodex] = find(parent[nodex])
-            return parent[nodex]
+        
+        def find(node):
+            if parent[node] != node:
+                parent[node] = find(parent[node])
+            return parent[node]
 
-        def union(nodex, nodey):
-            nodex, nodey = find(nodex), find(nodey)
-            if nodex != nodey:
-                parent[nodey] = nodex
+        def union(nodex,nodey):
+            rootx, rooty = find(nodex), find(nodey)
+            if rootx != rooty:
+                parent[rooty] = rootx
+
         edges = []
-        for i in range(0,len(isConnected)):
-            for j in range(i+1,len(isConnected)):
-                if isConnected[i][j] == 1:
-                    edges.append([i,j])
         parent = {}
-        for i in range(len(isConnected)):
+        n = len(isConnected)
+        for i in range(n):
             parent[i] = i
 
-        for x,y in edges:
-            union(x,y)
+        for i in range(0,len(isConnected)):
+            for j in range(0,len(isConnected[i])):
+                if isConnected[i][j] == 1:
+                    edges.append([i,j])
         
-        return len(set([find(item) for item in range(len(isConnected))]))
-            
+        for x, y in edges:
+            union(x,y)
+
+        return len(set([find(item) for item in range(n)]))
+
+        
+
+        
+
+        
