@@ -19,7 +19,6 @@ class Solution:
             dfs(root.right,depth+1)
 
         dfs(root,0)
-        index, highest = -1, -1
         ans = []
         res = list(level_sum.items())      
         for i in range(0,len(res)):
