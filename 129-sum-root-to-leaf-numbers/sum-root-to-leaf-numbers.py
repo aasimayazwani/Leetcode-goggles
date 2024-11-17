@@ -5,19 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def sumNumbers(self, root: Optional[TreeNode]) -> int:
-        result = []
+    def sumNumbers(self, root: Optional[TreeNode]):
+        ans = []
         def dfs(root,path):
             if root == None:
                 return 
-            if root.left != None:
-                dfs(root.left,path + ">" + str(root.left.val))
-            if (root.left == None) and (root.right == None):
-                total = path
-                value = int("".join(total.split(">")))
-                result.append(value)
-            if root.right != None:
-                dfs(root.right,path + ">" + str(root.right.val))
-
-        dfs(root,str(root.val))
-        return sum(result)
+            dfs(root.left,path+str(root.val))
+            if root.left == None and root.right == None:
+                ans.append(int(path+str(root.val)))
+            dfs(root.right,path+str(root.val))
+        dfs(root,"")
+        return sum(ans)
