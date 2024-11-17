@@ -6,20 +6,25 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
-        ans = []
-        def dfs(root,path):
+        mapping = {}
+
+        def dfs(root,total,path):
             if root == None:
                 return 
-            else:
-                dfs(root.left,path+">"+str(root.val))
-                if (root.left == None) and (root.right == None):
-                    total_path = path + ">" + str(root.val)
-                    values = [int(item) for item in total_path.split(">") if len(item) > 0]
-                    total = sum(values)
-                    if total == targetSum:
-                        ans.append(values)
-                dfs(root.right,path+">"+str(root.val))
-                
-        dfs(root,"")
-        #print(ans)
+            dfs(root.left,total+root.val,path+">"+str(root.val))
+            if root.left == None and root.right == None:
+                num = total+root.val
+                path = path +">"+str(root.val)
+                if num not in mapping:
+                    mapping[num] = [path]
+                else:
+                    mapping[num].append(path)
+
+            dfs(root.right,total+root.val,path+">"+str(root.val))
+
+        dfs(root,0,"0")
+        if targetSum not in mapping:
+            return []
+        ans = mapping[targetSum]
+        ans = [[int(item) for item in item.split(">")][1:] for item in ans]
         return ans
