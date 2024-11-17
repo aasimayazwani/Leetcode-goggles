@@ -6,25 +6,23 @@ class TreeNode:
 
 class Solution:
     def maxLevelSum(self, root: Optional[TreeNode]) -> int:
-        values = []
-        answers = [root.val]
-        stack = [root]
-        while len(stack) > 0:
-            current = []
-            for i in range(0,len(stack)):
-                node = stack[i]
-                if node.left:
-                    current.append(node.left)
-                if node.right:
-                    current.append(node.right)
-            stack = current
-            if len(current) > 0:
-                answers.append(sum([item.val for item in current]))
-        result = answers 
-        position = -100000
-        maximum = -1000000
-        for i in range(0,len(result)):
-            if maximum < result[i]:
-                maximum = result[i]
-                position = i + 1
-        return position 
+        level_sum = {}
+
+        def dfs(root,depth):
+            if root == None:
+                return 
+            dfs(root.left,depth+1)
+            if depth not in level_sum:
+                level_sum[depth] = root.val
+            else:
+                level_sum[depth] += root.val
+            dfs(root.right,depth+1)
+
+        dfs(root,0)
+        index, highest = -1, -1
+        ans = []
+        res = list(level_sum.items())      
+        for i in range(0,len(res)):
+            heapq.heappush(ans,(-res[i][1],res[i][0]))    
+        a, b = heapq.heappop(ans)
+        return b +1
