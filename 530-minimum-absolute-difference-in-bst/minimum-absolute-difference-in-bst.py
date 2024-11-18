@@ -7,7 +7,6 @@
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
         values = []
-
         def dfs(root):
             if root == None:
                 return 
@@ -15,12 +14,8 @@ class Solution:
             values.append(root.val)
             dfs(root.right)
 
-            return values
-
         dfs(root)
-        total = 10000000
+        minimum = 100000
         for i in range(0,len(values)-1):
-            total = min(total,values[i+1]-values[i])
-
-        return total
-
+            minimum = min(values[i+1] - values[i],minimum)
+        return minimum 
