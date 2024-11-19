@@ -1,34 +1,35 @@
 class Solution:
     def areSentencesSimilarTwo(self, sentence1: List[str], sentence2: List[str], similarPairs: List[List[str]]) -> bool:
-        if len(sentence1) != len(sentence2):
+        if len(sentence2) != len(sentence1):
             return False
-
+        edges = similarPairs
         parent = {}
-        allwords = sentence1 + sentence2 
-        for i in range(0,len(similarPairs)):
-            allwords += similarPairs[i]
-        allwords = list(set(allwords))
-        for word in allwords:
-            parent[word] = word
+        pairs = sentence1 + sentence2 
+        for i in range(0,len(edges)):
+            pairs.extend(edges[i])
+        pairs = list(set(pairs))
+        for i in range(0,len(pairs)):
+            parent[pairs[i]] = pairs[i]
+        def find(node):
+            if parent[node] != node:
+                parent[node] = find(parent[node])
+            return parent[node]
 
-        def find(root):
-            if parent[root] != root:
-                parent[root] = find(parent[root])
-            return parent[root]
-
-        def union(rootx,rooty):
-            rootx = find(rootx)
-            rooty = find(rooty)
-
+        def union(nodex,nodey):
+            rootx, rooty = find(nodex), find(nodey)
             if rootx != rooty:
                 parent[rooty] = rootx
+            
+        for x, y in edges:
+            union(x,y)
+
+         
+        keys = list(parent.keys())
+        for i in range(0,len(keys)):
+            parent[keys[i]] = find(keys[i])
         
-        for u, v in similarPairs:
-            union(u,v)
-
-
         for i in range(0,len(sentence1)):
-            if find(parent[sentence1[i]]) != find(parent[sentence2[i]]):
+            if find(sentence2[i]) != find(sentence1[i]):
                 return False
-
         return True 
+                    
