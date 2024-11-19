@@ -6,26 +6,22 @@
 #         self.right = right
 class Solution:
     def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
-        values = []
+        result = []
         def dfs(root):
             if root == None:
                 return 
-
-            else:
-                dfs(root.left)
-                values.append(root.val)
-                dfs(root.right)
-
-            return values
+            dfs(root.left)
+            result.append(root.val)
+            dfs(root.right)
 
         dfs(root)
-        ## sorted array called values
-        from collections import Counter
-        mapping = Counter(values)
-        keys = list(mapping.keys())
-        for i in range(0,len(keys)):
-            difference = k - keys[i]
-            if (difference in mapping) and (difference != keys[i]):
-                return True
-        return False 
-
+        left, right = 0, len(result)-1
+        while left < right:
+            total = result[left] + result[right]
+            if total == k:
+                return True 
+            elif total < k:
+                left +=1 
+            elif total > k:
+                right -=1 
+        return False
