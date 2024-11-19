@@ -6,27 +6,28 @@
 #         self.right = right
 class Solution:
     def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
-        mapping = {}
-        mapping["x"] = -1
-        mapping["y"]=-2
-        parent_map= {}
-        parent_map["x"]= -1
-        parent_map["y"]=-2
-
-        def dfs(root,parent,depth):
-            if root == None:
-                return 
+        parent, depth = {}, {}
+        parent[root.val] = None
+        depth[root.val] = 1
+        current = [root]
+        level = 1
+        while current:
+            candidates = []
+            level +=1
+            for i in range(0,len(current)):
+                node = current[i]
+                if node.left:
+                    parent[node.left.val] = node.val
+                    depth[node.left.val] = level
+                    candidates.append(node.left)
+                if node.right:
+                    parent[node.right.val] = node.val
+                    depth[node.right.val] = level
+                    candidates.append(node.right)
+            
+            if len(current) >= 1:
+                current = candidates
             else:
-                dfs(root.left,root,depth+1)
-                dfs(root.right,root,depth+1)
-                if root.val == x:
-                    mapping["x"] = depth 
-                    parent_map["x"] = parent.val if parent else None
-                if root.val == y:
-                    mapping["y"] = depth 
-                    parent_map["y"] = parent.val if parent else None
- 
+                break
+        return (depth[x] == depth[y]) and (parent[x] != parent[y])
 
-        dfs(root,None,0)
-        #print(parent_map)
-        return mapping["x"] == mapping["y"]   and parent_map["x"]!= parent_map["y"]
