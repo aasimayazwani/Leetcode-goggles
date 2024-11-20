@@ -2,20 +2,15 @@ class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if root == None:
             return None
-        
-        queue = [root]
-        while queue:
-            candidates = []
-            for i in range(0,len(queue)):
-                node = queue[i]
+        cur = [root]
+        while cur:
+            cand = []
+            for i in range(0,len(cur)):
+                node = cur[i]
                 node.left, node.right = node.right, node.left
-                
                 if node.left:
-                    candidates.append(node.left)
+                    cand.append(node.left)
                 if node.right:
-                    candidates.append(node.right)
-            if len(queue) > 0:
-                queue = candidates
-
-        return root
-                
+                    cand.append(node.right)
+            cur = cand
+        return root 
