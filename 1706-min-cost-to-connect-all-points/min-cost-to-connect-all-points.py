@@ -1,14 +1,17 @@
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        edges = []
+        edges  = []
         for i in range(0,len(points)):
-            for j in range(i+1,len(points)):
-                distance = abs(points[i][0]-points[j][0]) + abs(points[i][1]-points[j][1])
-                edges.append([distance,i,j])
-        edges = sorted(edges,key=lambda x:x[0])
-        rank = [0]*(len(points))
+            for j in range(i+1, len(points)):
+                dist = abs(points[i][0] - points[j][0]) + abs(points[i][1] - points[j][1]) 
+                edges.append([i,j,dist])
+
+        edges = sorted(edges,key = lambda x:x[2])
+        
         parent = {}
-        for i in range(0,len(points)):
+        n = len(points)
+        rank = [0]*(n)
+        for i in range(n):
             parent[i] = i
 
         def find(node):
@@ -16,29 +19,26 @@ class Solution:
                 parent[node] = find(parent[node])
             return parent[node]
 
-        def union(nodex,nodey):
-            nodex,nodey = find(nodex), find(nodey)
-            if nodex != nodey:
-                if rank[nodex] < rank[nodey]:
-                    parent[nodex] = nodey
+        def union(nodex, nodey):
+            rootx, rooty = find(nodex), find(nodey)
+            if rootx != rooty:
+                if rank[rootx] < rank[rooty]:
+                    parent[rootx] = rooty
+                    rank[rooty] +=1
 
-                if rank[nodex] > rank[nodey]:
-                    parent[nodey] = nodex
+                elif rank[rootx] > rank[rooty]:
+                    parent[rooty] = rootx
+                    rank[rootx] +=1 
 
-                if rank[nodex] == rank[nodey]:
-                    parent[nodey] = nodex
-                    rank[nodex] +=1 
+                elif rank[rootx] == rank[rooty]:
+                    rank[rootx] +=1 
+                    parent[rooty] = rootx
+                
                 return True 
-            else:
-                return False 
-
-        total = 0
-        for dist, x,y in edges:
-            if union(x,y):
-                total += dist
-
-        return total 
-
+            return False
             
-
-        
+        total = 0
+        for x,y, cost in edges:
+            if union(x,y):
+                total += cost
+        return total 
