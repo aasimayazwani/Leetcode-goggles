@@ -27,8 +27,6 @@ class Solution:
             else:
                 return False
 
-        
-        counting = 0
         for x, y in edges:
             if union(x,y):
                 pass
