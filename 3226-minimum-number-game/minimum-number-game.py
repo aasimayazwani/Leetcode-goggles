@@ -1,9 +1,14 @@
 class Solution:
     def numberGame(self, nums: List[int]) -> List[int]:
+        # remove min element 
+        # remove min element 
         heapq.heapify(nums)
-        result = []
-        while len(nums) > 0:
-            alice = heapq.heappop(nums)
-            bob = heapq.heappop(nums)
-            result += [bob,alice]
-        return result 
+        counter = 0
+        ans, temp = [], []
+        while nums:
+            cur1 = heapq.heappop(nums)
+            temp.append(cur1)
+            if len(temp) == 2:
+                ans.extend(temp[::-1])
+                temp = []
+        return ans 
