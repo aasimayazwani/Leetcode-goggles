@@ -1,19 +1,28 @@
+# Write your MySQL query statement belowse
 with cte as
-    (select
-    t1.product_id, t2.customer_id, 
-    date_format(t2.order_date,"%Y-%m") as "month",
-    sum(t1.price*t2.quantity) as "total"
-    from product as t1 
-    inner join 
-    orders as t2 
-    on t1.product_id = t2.product_id 
-    group by t2.customer_id, month)
+(select 
+t2.customer_id, 
+t1.price*t2.quantity as "total",
+date_format(t2.order_date,"%Y-%m") as "date"
+from product as t1 
+inner join 
+orders as t2 
+on 
+t1.product_id = t2.product_id),
 
-select t4.customer_id, t3.name  from customers as t3 
-    inner join 
-    (select t1.customer_id  
-    from cte as t1, cte as t2 
-    where t1.customer_id = t2.customer_id and 
-    t1.total >= 100 and t2.total >= 100  and 
-    t1.month = "2020-06" and t2.month = "2020-07") as t4 
-    on t3.customer_id = t4.customer_id ; 
+cte2 as
+(select customer_id, date,sum(total) as "total" 
+from cte 
+group by customer_id, date ), 
+
+cte3 as
+(select distinct p1.customer_id  from cte2 as p1, cte2 as p2 
+where p1.customer_id = p2.customer_id and 
+p1.date = "2020-06" and p2.date = "2020-07" and 
+p1.total >= 100 and p2.total >= 100)
+
+select r1.customer_id, r1.name  from customers as r1
+inner join 
+cte3 as r2 
+on 
+r1.customer_id = r2.customer_id 
