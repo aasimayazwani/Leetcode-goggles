@@ -1,5 +1,6 @@
 # Write your MySQL query statement below
-select person_id, 
-         concat(name,"(",left(profession,1),")") as "name"
-        from person
-        order by person_id desc 
+select 
+person_id, concat(name,"(",left(profession,1),")") as "name"
+from 
+person
+order by person_id desc ; 
