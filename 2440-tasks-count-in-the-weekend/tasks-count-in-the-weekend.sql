@@ -1,10 +1,20 @@
-with cte as 
-(select *, date_format(submit_date,"%W") as "weekday" from tasks)
+with cte as
+    (select 
+        case 
+            when day = 0 or day = 6 then "weekend"
+            else 'weekday'
+        end as "week"
+        from
+        (select date_format(submit_date,"%w") as 'day'
+        from tasks) as t1),
 
+cte2 as
+(select *, count(*) "count" from cte 
+group by week)
 
-select count(distinct t1.task_id) as "weekend_cnt",
-        count(distinct t2.task_id) as "working_cnt"
-        from cte as t1, 
-        cte as t2
-        where t1.weekday in ("Saturday","Sunday") and 
-        t2.weekday not in ("Saturday","Sunday") ; 
+select 
+p2.count as "weekend_cnt", p1.count as "working_cnt"
+from cte2 as p1, cte2 as p2 
+where 
+p1.week = "weekday" and 
+p2.week = "weekend"
