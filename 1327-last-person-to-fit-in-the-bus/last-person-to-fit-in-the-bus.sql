@@ -1,5 +1,9 @@
-select person_name from 
-(select *, sum(weight) over (order by turn) as "Total_Weight"
-from queue ) as t1  
-where Total_Weight <= 1000
-order by Total_Weight desc limit 1 ;
+select person_name from
+    (select person_name, total_weight
+        from
+        (select *, sum(weight) over (order by turn) as "total_weight"
+        from queue ) as t1 
+        where total_weight <= 1000 ) as t2 
+    order by total_weight desc 
+    limit 1 ; 
+    
