@@ -1,5 +1,16 @@
-select e1.name from employee e1 inner join (
-select id, name, count(*) as total, managerId from employee 
-group by managerId 
-having total >= 5) as t 
-on e1.id = t.managerid 
+# Write your MySQL query statement below
+with cte as
+    (select managerid
+        from
+        (select managerid, count(id) as "counting"
+        from employee
+        group by managerid) as t1
+        where counting >= 5)
+
+select 
+p2.name 
+from cte as p1 
+inner join 
+employee as p2 
+on 
+p1.managerid = p2.id
