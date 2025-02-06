@@ -1,7 +1,9 @@
 class Solution:
     def sortArray(self, nums: List[int]) -> List[int]:
+        ans = []
+        import heapq 
         heapq.heapify(nums)
-        collect = []
-        while len(nums) > 0:
-            collect.append(heapq.heappop(nums))
-        return collect 
+        while nums:
+            current = heapq.heappop(nums)
+            ans.append(current)
+        return ans
