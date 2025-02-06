@@ -1,10 +1,11 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        mapping = {1:1,2:2}
-        def climb(n):
+        mapping = {}
+        mapping[1], mapping[2] = 1, 2 
+        def fib(n):
             if n in mapping:
                 return mapping[n]
             else:
-                mapping[n] = climb(n-1) + climb(n-2)
+                mapping[n] = fib(n-1) + fib(n-2)
                 return mapping[n]
-        return climb(n)
+        return fib(n)
