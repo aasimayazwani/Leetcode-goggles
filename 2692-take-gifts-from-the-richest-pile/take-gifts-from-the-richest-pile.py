@@ -1,12 +1,16 @@
 class Solution:
     def pickGifts(self, gifts: List[int], k: int) -> int:
+        import math
+        import heapq
         gifts = [-item for item in gifts]
-        heapq.heapify(gifts)
+        nums = gifts.copy()
+        heapq.heapify(nums)
         while k > 0:
-            current = heapq.heappop(gifts)
-            k -=1
-            heappush(gifts,-math.floor(math.sqrt(-(current))))
-        total = []
-        while len(gifts) > 0:
-            total.append(heapq.heappop(gifts))
-        return -sum(total)
+            max_val = abs(heapq.heappop(nums))
+            k-=1
+            new_val = math.floor(math.sqrt(max_val))
+            heapq.heappush(nums,-new_val)
+        ans = []
+        while nums:
+            ans.append(abs(heapq.heappop(nums)))
+        return sum(ans)
