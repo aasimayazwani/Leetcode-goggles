@@ -1,34 +1,53 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        ans = set()
-        def backtrack(current,n,left,right):
-            if (left == n) and (right == n):
-                ans.add(current)
-                return 
-            if right < n:
-                backtrack(current+")",n, left, right + 1)
-            if left < n:
-                backtrack(current+"(",n, left + 1, right)
-        backtrack("",n,0,0)
-        combinations = list(ans)
-        result = []
-        for i in range(0,len(combinations)):
-            if self.check(combinations[i]) == True:
-                result.append(combinations[i])
-        return result
+        length  = 2*n
+        left = ["(","[","{"]
+        right = [")","]","}"]
+        mapping = {}
+        for i in range(0,len(right)):
+            mapping[left[i]] = right[i]
 
-    def check(self,arr):
-        arr = [item for item in arr]
-        stack = []
-        while len(arr):
+        def check(s):
+            stack = []
+            s = [item for item in s ]
+            while len(s):
+                if len(stack) == 0:
+                    if s[0] in left:
+                        stack.append(s.pop(0))
+                    else:
+                        return False 
+                else:
+                    if s[0] in left:
+                        stack.append(s.pop(0))
+                    elif s[0] in right:
+                        if mapping[stack[-1]] == s[0]:
+                            s.pop(0)
+                            stack.pop(-1)
+                        else:
+                            return False
             if len(stack) == 0:
-                stack.append(arr[0])
-                arr.pop(0)
-            else:
-                if arr[0] == ")":
-                    stack.pop(-1)
-                if arr[0] == "(":
-                    stack.append(")")
+                return True
+            return False 
 
-                arr.pop(0)
-        return len(stack) == 0
+        def create(string,length,left,right):
+            if length == 0:
+                if left == right:
+                    ans.append(string)
+                return 
+            else:
+                #create( "("+string,length-1, left +1, right)
+                #create( ")"+string,length-1, left, right+1)
+                create( string+")",length-1, left, right+1)
+                create( string+"(",length-1, left+1, right)
+        
+        ans = []
+        result = []
+        create("",length,0,0)
+        #print(ans)
+
+        for i in range(0,len(ans)):
+            if check(ans[i]):
+                result.append(ans[i])
+        return list(set(result) )
+        
+        
