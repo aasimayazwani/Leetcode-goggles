@@ -1,17 +1,18 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        def iterate(current,nums,total):
-            if len(current) == total:
-                ans.append(current)
-            if len(current) < total:
-                for i in range(0,len(nums)):
-                    if len(current) == 0:
-                        iterate(current+[nums[i]],nums,total)
-                    if len(current) > 0:
-                        if current[-1] < nums[i]:
-                            iterate(current +[nums[i]],nums,total)
-                        else:
-                            pass
+        nums = list(range(1,n+1))
+        def search(cur,k):
+            if len(cur) == k:
+                ans.append(cur)
+                return 
+            else:
+                for i in range(1,n+1):
+                    if len(cur) ==0:
+                        search(cur+[i],k)
+                    else:
+                        if cur[-1] < i:
+                            search(cur+[i],k)
         ans = []
-        iterate([],list(range(1,n+1)),k)
-        return ans
+        search([],k)
+        return ans 
+            
