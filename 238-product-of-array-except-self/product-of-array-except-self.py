@@ -1,30 +1,21 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        product = 1 
-        for i in range(0,len(nums)):
-            product = product*nums[i]
-        mapping = {}
+        zero_count = []
+        product = 1
         for i in range(0,len(nums)):
             if nums[i] == 0:
-                mapping[i] = 1
+                zero_count.append(i)
+            else:
+                product = product*nums[i]
 
-        # check if the mapping dictionary has any items present
-        # if the current key is not the 
-        if len(mapping) == 0:
-            return [int(product/item) for item in nums]
+        if len(zero_count) > 1:
+            return [0]*len(nums)
+        elif len(zero_count) == 1:
+            result = [0]*len(nums)
+            result[zero_count[0]] = product
         else:
-            answer = [] 
+            result = [product]*len(nums)
             for i in range(0,len(nums)):
-                if len(mapping) > 1:
-                    answer.append(0)
-                if len(mapping) == 1:
-                    if i in mapping:
-                        c1 = 1
-                        for i in range(0,len(nums)):
-                            if nums[i] != 0:
-                                c1 = c1*nums[i]
-                        answer.append(c1)
-
-                    else :
-                        answer.append(0)
-            return answer
+                result[i] = int(result[i]/nums[i])
+        return result            
+            
