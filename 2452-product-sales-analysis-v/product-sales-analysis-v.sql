@@ -1,5 +1,7 @@
+# Write your MySQL query statement below
 select 
-t1.user_id, sum(t1.quantity*t2.price) as "spending"
+t1.user_id, 
+sum(t2.price*t1.quantity) as "spending"
 from sales as t1 
 inner join 
 product as t2 
