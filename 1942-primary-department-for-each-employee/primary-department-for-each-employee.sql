@@ -1,9 +1,12 @@
 # Write your MySQL query statement below
-select employee_id, department_id 
-from employee 
-where employee_id in (
-    select employee_id 
-    from employee 
-    group by employee_id
-    having count(employee_id) = 1)
-    or primary_flag = "Y" ; 
+
+with cte as (
+    select *, count(employee_id) over (partition by employee_id) as "counting"
+    from employee
+)
+
+(select employee_id, department_id from cte
+    where counting > 1 and primary_flag = "Y")
+union all 
+(select employee_id, department_id from cte
+    where counting = 1)
