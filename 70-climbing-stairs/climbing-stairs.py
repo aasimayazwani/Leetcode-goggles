@@ -1,11 +1,13 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        mapping = {}
-        mapping[1], mapping[2] = 1, 2 
-        def fib(n):
-            if n in mapping:
-                return mapping[n]
+        dp = {}
+        dp[1], dp[2] = 1, 2
+
+        def recurse(n):
+            if n in dp:
+                return dp[n]
             else:
-                mapping[n] = fib(n-1) + fib(n-2)
-                return mapping[n]
-        return fib(n)
+                dp[n] = recurse(n-1) + recurse(n-2)
+                return dp[n]
+        
+        return recurse(n)
