@@ -1,8 +1,12 @@
 class Solution:
     def fib(self, n: int) -> int:
-        if n == 0 :
-            return 0
-        if n == 1 :
-            return 1 
-        else :
-            return self.fib(n-1) + self.fib(n-2)
+        dp = {}
+        dp[0], dp[1] = 0, 1
+        def recurse(n):
+            if n in dp:
+                return dp[n]
+            else:
+                dp[n] = recurse(n-1) + recurse(n-2)
+                return dp[n]
+
+        return recurse(n)
