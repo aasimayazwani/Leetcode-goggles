@@ -1,6 +1,6 @@
 class Solution:
-    import heapq
     def maxProduct(self, nums: List[int]) -> int:
-        heapq.heapify(nums)
-        x, y = nlargest(2,nums)
-        return (x-1)*(y-1)
+        nums2 = [-item for item in nums]
+        heapq.heapify(nums2)
+        s1, s2 = heapq.heappop(nums2),heapq.heappop(nums2)
+        return (-s1-1)*(-s2-1)
