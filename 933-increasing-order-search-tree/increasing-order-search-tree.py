@@ -5,19 +5,18 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def increasingBST(self, root: TreeNode) -> TreeNode:
-        ans = []
+    def increasingBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         def dfs(root):
             if root == None:
-                return
+                return 
             dfs(root.left)
             ans.append(root.val)
             dfs(root.right)
+        ans = []
         dfs(root)
-        new = TreeNode(ans[0])
-        final = new
-        for i in range(1,len(ans)):
-            succesor = TreeNode(val=ans[i])
-            new.right = succesor
-            new = new.right 
-        return final 
+        result = cur = TreeNode(-1)
+        for i in range(0,len(ans)):
+            temp = TreeNode(ans[i])
+            cur.right = temp
+            cur = cur.right
+        return result.right 
