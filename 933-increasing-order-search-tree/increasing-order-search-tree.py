@@ -8,15 +8,18 @@ class Solution:
     def increasingBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         def dfs(root):
             if root == None:
-                return 
+                return
             dfs(root.left)
             ans.append(root.val)
             dfs(root.right)
         ans = []
         dfs(root)
-        result = cur = TreeNode(-1)
+        
+        answer = temp = TreeNode(-1)
         for i in range(0,len(ans)):
-            temp = TreeNode(ans[i])
-            cur.right = temp
-            cur = cur.right
-        return result.right 
+            cur = TreeNode(ans[i])
+            temp.right = cur
+            temp = temp.right
+        return answer.right 
+
+        
