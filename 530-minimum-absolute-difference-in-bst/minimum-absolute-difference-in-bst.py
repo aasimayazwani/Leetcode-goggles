@@ -6,16 +6,19 @@
 #         self.right = right
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
-        values = []
+        ans = []
+        heapq.heapify(ans)
         def dfs(root):
             if root == None:
                 return 
             dfs(root.left)
-            values.append(root.val)
+            heapq.heappush(ans,root.val)    
             dfs(root.right)
-
         dfs(root)
-        minimum = 100000
-        for i in range(0,len(values)-1):
-            minimum = min(values[i+1] - values[i],minimum)
-        return minimum 
+        difference = 100000000
+        previous = heapq.heappop(ans)
+        while ans:
+            current = heapq.heappop(ans)
+            difference = min(difference,current-previous)
+            previous = current
+        return difference 
