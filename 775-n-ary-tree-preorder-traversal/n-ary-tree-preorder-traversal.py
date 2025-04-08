@@ -1,22 +1,21 @@
 """
 # Definition for a Node.
 class Node:
-    def __init__(self, val=None, children=None):
+    def __init__(self, val: Optional[int] = None, children: Optional[List['Node']] = None):
         self.val = val
         self.children = children
 """
 
 class Solution:
     def preorder(self, root: 'Node') -> List[int]:
-        result = []
-        
         def dfs(root):
             if root == None:
-                return []
-            else:
-                result.append(root.val)
-                children = list(root.children)
-                for child in children:
-                    dfs(child)
-            return result
-        return dfs(root)
+                return 
+            ans.append(root.val)
+            children = root.children
+            for child in children:
+                dfs(child)
+        ans = []
+        dfs(root)
+        return ans 
+        
