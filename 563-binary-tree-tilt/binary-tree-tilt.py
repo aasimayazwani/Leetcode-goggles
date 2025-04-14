@@ -6,17 +6,16 @@
 #         self.right = right
 class Solution:
     def findTilt(self, root: Optional[TreeNode]) -> int:
-        values = []
+        self.total = 0
+
         def dfs(root):
             if root == None:
                 return 0
-            else:
-                left_sum = dfs(root.left)
-                right_sum = dfs(root.right)
-
-                values.append(abs(left_sum - right_sum))
-
-                return root.val + left_sum + right_sum 
-
+            left_sum = dfs(root.left)
+            right_sum = dfs(root.right)
+            self.total += abs(left_sum - right_sum)
+            return left_sum + right_sum + root.val 
+        
         dfs(root)
-        return sum(values)
+        return self.total
+
