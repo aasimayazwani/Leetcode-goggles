@@ -1,20 +1,19 @@
 class Solution:
     def backspaceCompare(self, s: str, t: str) -> bool:
-        return self.remove(s) == self.remove(t)
+        return self.operate(s) == self.operate(t)
 
-    def remove(self,s):
-        s = [item for item in s]
+    def operate(self,string):
         stack = []
-        while len(s) > 0:
+        string = [item for item in string]
+        for i in range(0,len(string)):
             if len(stack) == 0:
-                if s[0] != "#":
-                    stack.append(s.pop(0))
-                else:
-                    s.pop(0)
+                if string[i] != "#":
+                    stack.append(string[i])
+                else :
+                    pass
             else:
-                if s[0] == "#":
+                if string[i] == "#":
                     stack.pop(-1)
-                    s.pop(0)
                 else:
-                    stack.append(s.pop(0))
+                    stack.append(string[i])
         return "".join(stack)
