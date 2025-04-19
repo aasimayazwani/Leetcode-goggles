@@ -1,23 +1,21 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
-        string = [item for item in s]
-        return self.checks(s)
-        
-    def checks(self,string):
-        counting = 0
         stack = []
-        for i in range(0,len(string)):
+        error_count = 0
+        s = [item for item in s]
+        for i in range(0,len(s)):
             if len(stack) == 0:
-                stack.append(string[i])
+                if s[i] == "(":
+                    stack.append(s[i])
+                else:
+                    error_count +=1
             else:
-                if string[i] == ")":
+                if s[i]  == "(":
+                    stack.append(s[i])
+                else :
                     if stack[-1] == "(":
                         stack.pop(-1)
                     else:
-                        counting +=1
-
-                if string[i] == "(":
-                    stack.append(string[i])
-
-        return counting + len(stack)
-            
+                        error_count +=1
+        return len(stack) + error_count
+                
